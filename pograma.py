@@ -31,6 +31,16 @@ while (key == True):
 
                     for i in dados:
                         print('funcionario:', i[0],'renda:', i[1],'função:', i[2])
+                case 2:
+                    print('apenas funcionarios especificos podem acessar essa área. Para isso é necessario uma senha especial.')
+                    verificacao = int(input('digite a senha:'))
+                    cursor.execute('SELECT senha FROM funcionario WHERE funcao = "CHEFE"')
+                    senha = cursor.fetchall()
+                    match verificacao == senha:
+                        case False:
+                            print('senha incorreta')
+                        case True:
+                            pass
 #categoria de clientes.
         case 2:
             cliente = int(input('[1] ver cliente \n[2]alterar cliente \n[3]adicionar/excluir cliente \n:'))
