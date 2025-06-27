@@ -12,7 +12,7 @@ while (key == False):
     dados = cursor.fetchall()
     for info in dados:
         nomeConfirmado = str.lower(info[0]) == str.lower(nome)
-        senhaConfirmado = info[3] == senha
+        senhaConfirmado = info [3] == senha
         if (nomeConfirmado and senhaConfirmado):
             key = True
             break
@@ -21,6 +21,7 @@ while (key == False):
 while (key == True):
     inicio = int(input('[1]funcionarios \n[2] clientes \n[3] produto \n[4] sair \n: '))
     match inicio:
+
 #categoria de funcionarios.
         case 1:
             funcionario = int(input('[1]ver funcionarios \n[2]alterar funcionario \n[3] adicionar/excluir funcionario \n:'))
@@ -39,8 +40,14 @@ while (key == True):
                     match verificacao == senha:
                         case False:
                             print('senha incorreta')
+                    match senha:
                         case True:
                             pass
+                case 3:
+                    pass
+                case _:
+                    print("Ação invalida")
+
 #categoria de clientes.
         case 2:
             cliente = int(input('[1] ver cliente \n[2]alterar cliente \n[3]adicionar/excluir cliente \n:'))
@@ -51,12 +58,14 @@ while (key == True):
 
                     for i in dados:
                         print('cliente:',i[0],'nome:',i[1],'historico:')
+
 #categoria de produtos.
         case 3:
             produtos= int(input('[1] ver produtos \n[2]alterar produtos \n[3]adicionar/exluir produtos \n:'))
             match produtos:
                 case 1:
                     cursor.execute('SELECT * FROM produtos')
+
 #sair do programa.
         case 4:
             key = False
