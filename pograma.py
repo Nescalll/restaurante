@@ -1,4 +1,5 @@
 import sqlite3
+import movimento
 
 conn = sqlite3.connect('restaurante.db')
 cursor = conn.cursor()
@@ -8,14 +9,7 @@ while (key == False):
     nome = input('informe o nome do usuário:')
     senha = int(input('informe a senha do usuário:'))
 #confirmar se o usuário e a senha existe
-    cursor.execute('SELECT * FROM funcionario')
-    dados = cursor.fetchall()
-    for info in dados:
-        nomeConfirmado = str.lower(info[0]) == str.lower(nome)
-        senhaConfirmado = info [3] == senha
-        if (nomeConfirmado and senhaConfirmado):
-            key = True
-            break
+    key = movimento.validarEntrada(nome, senha)
     if(key == False):
         print('nome ou senha errado, comfirme se alguns deles esta errado e tente novamete')
 while (key == True):
@@ -27,11 +21,7 @@ while (key == True):
             funcionario = int(input('[1]ver funcionarios \n[2]alterar funcionario \n[3] adicionar/excluir funcionario \n:'))
             match funcionario:
                 case 1:
-                    cursor.execute('SELECT * FROM funcionario')
-                    dados = cursor.fetchall()
-
-                    for i in dados:
-                        print('funcionario:', i[0],'renda:', i[1],'função:', i[2])
+                    movimento.visualizarTabela("funcionario", ["funcionario", "salario", "função", "senha"])
                 case 2:
                     print('apenas funcionarios especificos podem acessar essa área. Para isso é necessario uma senha especial.')
                     verificacao = int(input('digite a senha:'))
@@ -42,9 +32,26 @@ while (key == True):
                             print('senha incorreta')
                     match senha:
                         case True:
-                            pass
+                            print("informe o funcionario, e a nova renda e sua nova função separados por um espaço.")
+                            print("caso não queira mudar nada, basta repetir a função/renda")
+                            [funcionario, renda, funcao] = input().split()
+                            funcionarioExitente = True
+                            cursor.execute('SELECT * FROM funcionario')
+                            dados = cursor.fetchall()
+                            for i in dados:
+                                if(funcionario in i):
+                                    funcionarioExitente = True
                 case 3:
-                    pass
+                    print('apenas funcionarios especificos podem acessar essa área. Para isso é necessario uma senha especial.')
+                    verificacao = int(input('digite a senha:'))
+                    cursor.execute('SELECT senha FROM funcionario WHERE funcao = "CHEFE"')
+                    senha = cursor.fetchall()
+                    match verificacao == senha:
+                        case False:
+                            print('senha incorreta')
+                    match senha:
+                        case True:
+                            pass                    
                 case _:
                     print("Ação invalida")
 
