@@ -72,6 +72,22 @@ while (key == True):
             match cliente:
                 case 1:
                     movimento.visualizarTabela("cliente", ["nome"])
+                case 2:
+                    print('apenas funcionarios especificos podem acessar essa área. Para isso é necessario uma senha especial.')
+                    verificacao = input('digite a senha:')
+                    match movimento.validarImportncia(verificacao):
+                        case False:
+                            print('senha incorreta')
+                        case True:
+                            print("informe o cliente, e seu novo nome.")
+                            [funcionario, salario, funcao] = input().split()
+                            funcionarioExitente = movimento.validarExistencia("funcionario", "nome", funcionario)
+                            match funcionarioExitente:
+                                case False:
+                                    print("O funcionario não existe")
+                                case True:
+                                    movimento.alterarDado("funcionario", ["salario", "funcao"], [salario, funcao.upper()], "nome", funcionario.upper())
+                                    print("usurio adicionado")
                 case _:
                     print("Ação invalida")
 
