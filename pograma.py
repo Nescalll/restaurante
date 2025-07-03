@@ -1,5 +1,5 @@
 import sqlite3
-import movimento as movimento
+import movimento
 
 conn = sqlite3.connect('restaurante.db')
 cursor = conn.cursor()
@@ -10,6 +10,7 @@ while (key == False):
     senha = int(input('informe a senha do usuário:'))
 #confirmar se o usuário e a senha existe
     key = movimento.validarEntradaDeFuncionario(nome, senha)
+    key = movimento.validarEntrada(nome, senha)
     if(key == False):
         print('nome ou senha errado, comfirme se alguns deles esta errado e tente novamete')
 while (key == True):
@@ -63,6 +64,24 @@ while (key == True):
                                             print("O funcionario foi excluido")
                                         case False:
                                             print("Funcionario não existe")
+                            [funcionario, renda, funcao] = input().split()
+                            funcionarioExitente = True
+                            cursor.execute('SELECT * FROM funcionario')
+                            dados = cursor.fetchall()
+                            for i in dados:
+                                if(funcionario in i):
+                                    funcionarioExitente = True
+                case 3:
+                    print('apenas funcionarios especificos podem acessar essa área. Para isso é necessario uma senha especial.')
+                    verificacao = int(input('digite a senha:'))
+                    cursor.execute('SELECT senha FROM funcionario WHERE funcao = "CHEFE"')
+                    senha = cursor.fetchall()
+                    match verificacao == senha:
+                        case False:
+                            print('senha incorreta')
+                    match senha:
+                        case True:
+                            pass                    
                 case _:
                     print("Ação invalida")
 

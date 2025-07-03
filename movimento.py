@@ -3,8 +3,11 @@ conn = sqlite3.connect('restaurante.db')
 cursor = conn.cursor()
 
 def visualizarTabela(nomeDaTabela, colunas = []):
+<<<<<<< HEAD
     conn = sqlite3.connect('restaurante.db')
     cursor = conn.cursor()
+=======
+>>>>>>> ddd2de81d92156b695cb68edf9010b8be9276602
     cursor.execute("SELECT * FROM "+nomeDaTabela)
     dados = cursor.fetchall()
     voltas = 0
@@ -15,7 +18,11 @@ def visualizarTabela(nomeDaTabela, colunas = []):
         voltas = 0
         print()
     return
+<<<<<<< HEAD
 def validarEntradaDeFuncionario(nome, senha):
+=======
+def validarEntrada(nome, senha):
+>>>>>>> ddd2de81d92156b695cb68edf9010b8be9276602
     cursor.execute('SELECT * FROM funcionario')
     dados = cursor.fetchall()
     for info in dados:
@@ -25,6 +32,7 @@ def validarEntradaDeFuncionario(nome, senha):
             return True
     return False
 def validarExistencia(tabela, coluna, valor):
+<<<<<<< HEAD
     cursor.execute("SELECT "+coluna+" FROM "+tabela)
     tabelaDeNomes = cursor.fetchall()
     for i in tabelaDeNomes:
@@ -42,3 +50,8 @@ def validarImportncia(senha):
     if(senha in senhaReal[0]):
         return True
     return False
+=======
+    pass
+def alterarDado(tabela, valores):
+    pass
+>>>>>>> ddd2de81d92156b695cb68edf9010b8be9276602
